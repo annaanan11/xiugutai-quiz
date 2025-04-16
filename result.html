@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>你的命劫｜半生繡骨</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background-color: #1a1a1a;
+      color: #e5e0dc;
+      font-family: 'Noto Serif TC', serif;
+      text-align: center;
+      padding: 2rem;
+    }
+    .result {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    img {
+      width: 80%;
+      max-width: 300px;
+      border-radius: 1rem;
+      margin-bottom: 1.5rem;
+      border: 2px solid #eac7b4;
+    }
+    h1 {
+      font-size: 2rem;
+      color: #eac7b4;
+      margin-bottom: 1rem;
+    }
+    .quote {
+      font-style: italic;
+      color: #d9cfc9;
+      margin-bottom: 1.5rem;
+    }
+    .desc {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #e5e0dc;
+    }
+    .back {
+      margin-top: 2rem;
+      display: inline-block;
+      padding: 0.8rem 2rem;
+      border: 1px solid #eac7b4;
+      color: #eac7b4;
+      border-radius: 2rem;
+      text-decoration: none;
+    }
+    .back:hover {
+      background-color: #eac7b4;
+      color: #1a1a1a;
+    }
+  </style>
+</head>
+<body>
+  <div class="result" id="resultContainer"></div>
+  <script>
+    const score = JSON.parse(localStorage.getItem('quizResult')) || {};
+    let max = Math.max(score.you || 0, score.ping || 0, score.zuo || 0);
+    let role = (score.you === max) ? 'you' : (score.ping === max) ? 'ping' : 'zuo';
+
+    const results = {
+      you: {
+        name: '佑祐｜蘭香為引，夢裡生根',
+        img: 'assets/youyou.png',
+        quote: '「我早該帶你走的。」',
+        desc: '你牽動了那位站在暗處的殺手，他從不明說，只在你唱戲時輕聲喘息。他會給你黃布糖葫蘆，也會給你劇毒與痛。他曾錯過你一次，這次，他會用盡全部的黑夜與利刃，把你留在身邊。'
+      },
+      ping: {
+        name: '平蘋｜香為蘋果，夢似霧',
+        img: 'assets/pingpin.png',
+        quote: '「我會記得你，像記得一場好戲。可惜你不是主角。」',
+        desc: '你吸引的是那位溫文冷笑、記仇如命的老爺。他愛美人，也愛毒。你在他眼裡，是一件不該出現在戲樓的東西——太真了，太近了。他會溫柔地說喜歡你，然後把你藏進他一人的戲本裡。'
+      },
+      zuo: {
+        name: '佐左｜白麝為骨，夢如戰場',
+        img: 'assets/zuozuo.png',
+        quote: '「你站好，別動。別讓我動手。」',
+        desc: '你引來了那位沉默的軍人，滿身硝煙，手起刀落。他不懂愛，只懂佔有。他會用命令包裹你的名字，讓你連呼吸都小心翼翼。他不溫柔，但他記得你曾在舞台中央抬眼望他，那一眼，他願為你再殺一次人。'
+      }
+    };
+
+    const r = results[role];
+    document.getElementById("resultContainer").innerHTML = `
+      <img src="${r.img}" alt="角色圖" />
+      <h1>${r.name}</h1>
+      <div class="quote">${r.quote}</div>
+      <div class="desc">${r.desc}</div>
+      <a class="back" href="index.html">重新測驗</a>
+    `;
+  </script>
+</body>
+</html>
