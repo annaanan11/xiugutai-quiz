@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>開始測驗｜半生繡骨</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Noto Serif TC', serif;
+      background-color: #1a1a1a;
+      color: #e5e0dc;
+      padding: 2rem;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background-image: url('assets/bg.jpg');
+      background-size: cover;
+      background-position: center;
+    }
+    .question {
+      font-size: 1.4rem;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      width: 100%;
+      max-width: 400px;
+    }
+    .option {
+      background-color: transparent;
+      border: 1px solid #eac7b4;
+      padding: 1rem;
+      color: #eac7b4;
+      border-radius: 1rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .option:hover {
+      background-color: #eac7b4;
+      color: #1a1a1a;
+    }
+  </style>
+</head>
+<body>
+  <div id="quiz">
+    <div class="question" id="questionText"></div>
+    <div class="options" id="optionsContainer"></div>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        text: "梳妝鏡前，你在臉上抹下一筆紅——這抹紅，代表什麼？",
+        options: [
+          { text: "傷，落在心上的舊痕", score: "you" },
+          { text: "怨，藏在笑裡的毒刺", score: "ping" },
+          { text: "血，戰場未乾的熱意", score: "zuo" }
+        ]
+      },
+      {
+        text: "戲開一半，後場傳來腳步聲。你回頭，看到他站在陰影裡，那目光像⋯⋯",
+        options: [
+          { text: "深情，卻不屬於你", score: "you" },
+          { text: "溫柔，卻令人寒意陣陣", score: "ping" },
+          { text: "鋒利，像風裡藏刀", score: "zuo" }
+        ]
+      },
+      {
+        text: "他喚你，不是本名，而是那個戲中人的名字——你會？",
+        options: [
+          { text: "裝作沒聽見", score: "you" },
+          { text: "淺淺一笑，接了詞", score: "ping" },
+          { text: "鴉啼似地應一聲，低到聽不清", score: "zuo" }
+        ]
+      },
+      {
+        text: "你常夢見自己站在戲台中央，但觀眾席上⋯⋯",
+        options: [
+          { text: "空無一人，只剩他背對而坐", score: "you" },
+          { text: "滿場哄笑，無人看你", score: "ping" },
+          { text: "一片血紅，連戲服都濕透", score: "zuo" }
+        ]
+      },
+      {
+        text: "若這出戲不能停，你寧可反覆演哪一幕？",
+        options: [
+          { text: "他吻你，卻叫著別人的名字", score: "you" },
+          { text: "你與他相擁，心知他已下毒", score: "ping" },
+          { text: "你殺他，卻淚流滿面", score: "zuo" }
+        ]
+      },
+      {
+        text: "燈滅前，他低聲說：「你演得真好。」你⋯⋯",
+        options: [
+          { text: "終於落淚", score: "you" },
+          { text: "止不住冷笑", score: "ping" },
+          { text: "把刀藏回袖中", score: "zuo" }
+        ]
+      },
+      {
+        text: "若你是戲子，最終會選擇的命運是？",
+        options: [
+          { text: "無人記得的死", score: "you" },
+          { text: "驚鴻一瞥的名", score: "ping" },
+          { text: "血債血還的仇", score: "zuo" }
+        ]
+      }
+    ];
+
+    let currentQuestion = 0;
+    let score = { you: 0, ping: 0, zuo: 0 };
+
+    function showQuestion() {
+      const q = questions[currentQuestion];
+      document.getElementById("questionText").textContent = q.text;
+      const optionsContainer = document.getElementById("optionsContainer");
+      optionsContainer.innerHTML = "";
+      q.options.forEach(opt => {
+        const btn = document.createElement("div");
+        btn.className = "option";
+        btn.textContent = opt.text;
+        btn.onclick = () => {
+          score[opt.score]++;
+          currentQuestion++;
+          if (currentQuestion < questions.length) {
+            showQuestion();
+          } else {
+            localStorage.setItem('quizResult', JSON.stringify(score));
+            window.location.href = 'result.html';
+          }
+        };
+        optionsContainer.appendChild(btn);
+      });
+    }
+
+    showQuestion();
+  </script>
+</body>
+</html>
